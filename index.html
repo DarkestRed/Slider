@@ -8,12 +8,12 @@
     <script src="sliderModule.js"></script>
 
     <script>
-        let slideArr = ["http://www.1zoom.me/big2/969/280704-svetik.jpg",
+        let slideImagesURL = ["http://www.1zoom.me/big2/969/280704-svetik.jpg",
             "http://s1.1zoom.me/b5050/113/419777-svetik_1920x1200.jpg",
             "https://images.wallpaperscraft.com/image/road_trees_sunlight_beams_greens_summer_6402_1920x1080.jpg",
             "https://www.setaswall.com/wp-content/uploads/2017/06/Autumn-Season-1920-X-1200.jpg"];
         let page = new Page();
-        page.registerModule(new SliderModule(".mySlider1", slideArr, 5000));
+        page.registerModule(new SliderModule(".mySlider1", slideImagesURL, 5000));
         page.start();
     </script>
 

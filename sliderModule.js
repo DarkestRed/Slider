@@ -82,19 +82,12 @@ class SliderModule extends Module {
     addSlides(slideArr) {
         slideArr.forEach(e => {
             let slide = document.createElement("div");
-            slide.classList.add("slider-slide");
-            this.slideWrapper.appendChild(slide);
-            slide.style.backgroundImage = "url(" + e + ")";
-        });
-        this.addBubbles();
-    }
-
-    addBubbles() {
-        let slideCount = Array.prototype.slice.call(this.slideWrapper.children);
-        slideCount.forEach(() => {
             let bubble = document.createElement("div");
+            slide.classList.add("slider-slide");
             bubble.classList.add("bubble");
+            this.slideWrapper.appendChild(slide);
             this.bubbleCon.appendChild(bubble);
+            slide.style.backgroundImage = "url(" + e + ")";
         });
         this.bubbleCon.firstChild.classList.add("active");
     }
