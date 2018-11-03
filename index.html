@@ -3,103 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="style.css">
     <script src="baseApi.js"></script>
     <script src="sliderModule.js"></script>
+
     <script>
+        let slideArr = ["http://www.1zoom.me/big2/969/280704-svetik.jpg",
+            "http://s1.1zoom.me/b5050/113/419777-svetik_1920x1200.jpg",
+            "https://images.wallpaperscraft.com/image/road_trees_sunlight_beams_greens_summer_6402_1920x1080.jpg",
+            "https://www.setaswall.com/wp-content/uploads/2017/06/Autumn-Season-1920-X-1200.jpg"];
         let page = new Page();
-        page.registerModule(new SliderModule(".myslider1", 5000));
+        page.registerModule(new SliderModule(".mySlider1", slideArr, 5000));
         page.start();
     </script>
 
-    <style>
-        .slider {
-            width: 960px; /*any width*/
-            height: 500px; /*any height*/
-            margin: 0 auto;
-            border: 1px solid black;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .slider .slider-wrapper {
-            width: 200%;
-            height: 100%;
-            font-size: 0;
-        }
-
-        .slider .slider-wrapper .slider-slide {
-            width: 50%;
-            height: 100%;
-            display: inline-block;
-            font-size: 200px;
-            background-color: rgba(0, 0, 0, 0.3);
-        }
-
-        .slider .slider-arrow {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #ccc;
-            top: 50%;
-            margin-top: -25px;
-            cursor: pointer;
-        }
-
-        .slider .slider-arrow-left {
-            left: 25px;
-        }
-
-        .slider .slider-arrow-right {
-            right: 25px;
-        }
-
-        .slider .slider-wrapper .red {
-            background-color: red;
-        }
-
-        .slider .slider-wrapper .green {
-            background-color: green;
-        }
-
-        .slider .slider-wrapper .blue {
-            background-color: blue;
-        }
-
-        .slider .slider-wrapper .yellow {
-            background-color: yellow;
-        }
-        .slider .bubbles{
-            display: flex;
-            justify-content: space-between;
-            position: absolute;
-            bottom: 25px;
-            margin: 0 auto;
-        }
-        .bubble{
-            border-radius: 50%;
-            background-color: #ccc;
-            width: 50px;
-            height: 50px;
-        }
-    </style>
 </head>
 <body>
-<div class="slider myslider1">
-    <div class="slider-arrow slider-arrow-left"></div>
-    <div class="slider-arrow slider-arrow-right"></div>
-    <div class="bubbles">
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-    </div>
-    <div class="slider-wrapper">
-        <div class="slider-slide red">1</div>
-        <div class="slider-slide green">2</div>
-        <div class="slider-slide blue">3</div>
-        <div class="slider-slide yellow">4</div>
-    </div>
+<div class="slider mySlider1">
+    <div class="slider-arrow slider-arrow-left"><</div>
+    <div class="slider-arrow slider-arrow-right">></div>
+    <div class="slider-wrapper"></div>
+    <div class="slider-bubbles"></div>
 </div>
 </body>
 </html>

@@ -1,99 +1,101 @@
 class SliderModule extends Module {
 
 
-    constructor(selector, autoscrolltime = 0, autostop = true) {
+    constructor(selector, slideArr, autoScrollTime = 0, autoStop = true) {
         super(selector);
-        this.autoscrolltime = autoscrolltime;
-        this.autostop = autostop;
+        this.slideArr = slideArr;
+        this.autoScrollTime = autoScrollTime;
+        this.autoStop = autoStop;
         this.paused = false;
         this.isAnim = false;
     }
 
-    /*Override*/
     onComponentsLoading() {
         this.slideWrapper = this.get(".slider-wrapper");
         this.leftArrow = this.get(".slider-arrow-left");
         this.rightArrow = this.get(".slider-arrow-right");
+        this.bubbleCon = this.get(".slider-bubbles")
     }
 
-    /*Override*/
     onBindEvents() {
         this.rightArrow.addEventListener("click", () => this.animateLeft());
         this.leftArrow.addEventListener("click", () => this.animateRight());
-        this.container.addEventListener("mouseenter", () => this.paused = this.autostop);
+        this.container.addEventListener("mouseenter", () => this.paused = this.autoStop);
         this.container.addEventListener("mouseleave", () => this.paused = false);
     }
 
-    /*Override*/
     onCreate() {
-        if (this.autoscrolltime > 0) setInterval(() => {
+        this.addSlides(this.slideArr);
+        if (this.autoScrollTime > 0) setInterval(() => {
             if (this.paused) return;
             this.animateLeft();
-        }, this.autoscrolltime)
+        }, this.autoScrollTime);
     }
 
-    animateLeft(onend) {
+    animateLeft(onEnd) {
         if (this.isAnim) return;
         this.isAnim = true;
-        this.animate(0, -100, 1000, (value) => {
+        this.bubbleCon.insertBefore(this.bubbleCon.lastElementChild, this.bubbleCon.firstElementChild);
+        this.animate(0, -100, 700, (value) => {
             this.slideWrapper.style.marginLeft = value + "%";
         }, () => {
             this.slideWrapper.appendChild(this.slideWrapper.firstElementChild);
             this.slideWrapper.style.marginLeft = "";
-            if (onend) onend();
+            if (onEnd) onEnd();
             this.isAnim = false;
         })
     }
 
-    animateRight(onend) {
+    animateRight(onEnd) {
         if (this.isAnim) return;
         this.isAnim = true;
+        this.bubbleCon.appendChild(this.bubbleCon.firstElementChild);
         this.slideWrapper.insertBefore(this.slideWrapper.lastElementChild, this.slideWrapper.firstElementChild);
         this.slideWrapper.style.marginLeft = "-100%";
-        this.animate(-100, 0, 1000, (value) => {
+        this.animate(-100, 0, 700, (value) => {
             this.slideWrapper.style.marginLeft = value + "%";
         }, () => {
-            if (onend) onend();
+            if (onEnd) onEnd();
             this.slideWrapper.style.marginLeft = "";
             this.isAnim = false;
         })
     }
 
-    bubbles(){
-
-    }
-
-
-    animate(startvalue, endvalue, time, onframe, onend) {
+    animate(startValue, endValue, time, onFrame, onEnd) {
         const FRAME_TIME = 15;
         let frames = time / FRAME_TIME;
-        let step = (endvalue - startvalue) / frames;
+        let step = (endValue - startValue) / frames;
 
-        let up = endvalue > startvalue;
+        let up = endValue > startValue;
 
         let inter = setInterval(function () {
-            startvalue += step;
-            if ((up && startvalue >= endvalue) || (!up && startvalue <= endvalue)) {
+            startValue += step;
+            if ((up && startValue >= endValue) || (!up && startValue <= endValue)) {
                 clearInterval(inter);
-                startvalue = endvalue;
+                startValue = endValue;
             }
-            onframe(startvalue);
-            if (startvalue === endvalue && onend) onend();
+            onFrame(startValue);
+            if (startValue === endValue && onEnd) onEnd();
         }, FRAME_TIME);
     }
+
+    addSlides(slideArr) {
+        slideArr.forEach(e => {
+            let slide = document.createElement("div");
+            slide.classList.add("slider-slide");
+            this.slideWrapper.appendChild(slide);
+            slide.style.backgroundImage = "url(" + e + ")";
+        });
+        this.addBubbles();
+    }
+
+    addBubbles() {
+        let slideCount = Array.prototype.slice.call(this.slideWrapper.children);
+        slideCount.forEach(() => {
+            let bubble = document.createElement("div");
+            bubble.classList.add("bubble");
+            this.bubbleCon.appendChild(bubble);
+        });
+        this.bubbleCon.firstChild.classList.add("active");
+    }
 }
-
-
-/*
-HTML-structure:
-<div class="slider">
-        <div class="slider-arrow slider-arrow-left"></div>
-        <div class="slider-arrow slider-arrow-right"></div>
-        <div class="slider-wrapper">
-            <div class="slider-slide">1</div>
-            <div class="slider-slide">2</div>
-            <div class="slider-slide">3</div>
-        </div>
-</div>
-CSS-code:
-*/
