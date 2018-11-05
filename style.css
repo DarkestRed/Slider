@@ -35,8 +35,9 @@
     color: rgba(255, 255, 255, 0.7);
     line-height: 50px;
     text-align: center;
-    font-weight: bold;
     border: 1px solid rgba(255, 255, 255, 0.3);
+    user-select: none;
+    font-family: Arial;
 }
 
 .slider .slider-arrow:active {
@@ -61,12 +62,12 @@
 }
 
 .slider .slider-bubbles .bubble {
-    width: 15px;
-    height: 15px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.3);
     background-color: rgba(0, 0, 0, 0.7);
-    margin: 5px;
+    margin: 7px;
     cursor: pointer;
 }
 
